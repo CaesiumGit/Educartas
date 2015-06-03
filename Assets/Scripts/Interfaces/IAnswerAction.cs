@@ -3,5 +3,5 @@ using System.Collections;
 
 public interface IAnswerAction
 {
-    int MakeAnswer(Card card);
+    int MakeAnswer(Question question);
 }

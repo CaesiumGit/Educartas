@@ -4,10 +4,13 @@ using System.Collections;
 public class Question
 {
     public readonly string QuestionText;
-    public readonly string[] Choises;
+    public readonly string[] Choices;
     public readonly int RightChoice;
-    /// <summary>
-    /// Nome da carta a qual a pergunta está relacionada.
-    /// </summary>
-    public readonly string CardName;
+
+    public Question(string questionText, string[] choices, int rightChoice)
+    {
+        QuestionText = questionText;
+        Choices = choices;
+        RightChoice = rightChoice;
+    }
 }

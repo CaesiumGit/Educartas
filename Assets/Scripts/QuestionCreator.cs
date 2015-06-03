@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class QuestionCreator : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class QuestionCreator : IQuestionCreator
+{
+    public Question CreateQuestion(Card card)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -13,6 +13,7 @@ public class Player
     public Deck Deck { get { return _deck; } }
 
     public IChooseAction ChooseAction { get { return _chooseAction; } }
+    public IAnswerAction AnswerAction { get { return _answerAction; } }
 
     public Player(Deck deck, IChooseAction chooseAction, IAnswerAction answerAction)
     {

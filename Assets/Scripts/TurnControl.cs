@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Results
+public enum ChoiceResult
 {
     Win,
     Lose,
@@ -20,48 +20,58 @@ public class TurnControl : ITurnControl
     //Deck que armazenará as cartas que ficarem reservadas devido a empate.
     private Deck _drawCards;
 
-    private QuestionList _questions;
-
     public Player WinningPlayer { get { return _winningPlayer; } }
     public Player LosingPlayer { get { return _losingPlayer; } }
 
-    public TurnControl(Player winningPlayer, Player losingPlayer, QuestionList questions)
+    private bool _draw;
+    private IQuestionCreator _questionCreator;
+
+    public TurnControl(Player winningPlayer, Player losingPlayer, IQuestionCreator questionCreator)
     {
         _winningPlayer = winningPlayer;
         _losingPlayer = losingPlayer;
-        _questions = questions;
+
+        _drawCards = new Deck(40);
+        _questionCreator = questionCreator;
     }
 
     #region Interface methods
     public void StartTurn()
     {
         TakeCards();
+        _draw = false;
+        if (EnableQuestion(_turnsWithSameWinner, _winningPlayer.Deck.Count, _losingPlayer.Deck.Count))
+        {
+            if (AnswerQuestion(_losingPlayer.AnswerAction, _questionCreator.CreateQuestion(_winningPlayer.HandCard)))
+            {
+                SwitchPlayers();
+            }
+        }
     }
 
     public void HandleTurn()
     {
-        if (EnableQuestion(_turnsWithSameWinner, _winningPlayer.Deck.Count, _losingPlayer.Deck.Count))
+        switch (ChooseCardAttribute(_winningPlayer.ChooseAction, _winningPlayer.HandCard, _losingPlayer.HandCard))
         {
-            //TO-DO
-        }
-        else
-        {
-            switch (ChooseCardAttribute(_winningPlayer.ChooseAction, _winningPlayer.HandCard, _losingPlayer.HandCard))
-            {
-                case Results.Lose:
-                    SwitchPlayers();    
-                    break;
-                case Results.Win:
-                    break;
-                case Results.Draw:
-                    break;
-            }
+            case ChoiceResult.Lose:
+                SwitchPlayers();
+                break;
+            case ChoiceResult.Win:
+                _turnsWithSameWinner++;
+                break;
+            case ChoiceResult.Draw:
+                _drawCards.PlaceCard(_winningPlayer.HandCard);
+                _drawCards.PlaceCard(_losingPlayer.HandCard);
+                _draw = true;
+                break;
         }
     }
 
     public void EndTurn()
     {
-        throw new System.NotImplementedException();
+        //Checa se houve empate
+        if (!_draw)
+            WinnerTakesAll(_drawCards, _losingPlayer.HandCard, _winningPlayer.HandCard, _winningPlayer.Deck);
     }
     #endregion
 
@@ -70,6 +80,7 @@ public class TurnControl : ITurnControl
         var tmp = _winningPlayer;
         _winningPlayer = _losingPlayer;
         _losingPlayer = tmp;
+        _turnsWithSameWinner = 0;
     }
 
     public void TakeCards()
@@ -81,10 +92,26 @@ public class TurnControl : ITurnControl
     /// <summary>
     /// Player que tem iniciativa no turno escolhe um atributo e o valor é comparado com o outro player.
     /// </summary>
-    public Results ChooseCardAttribute(IChooseAction winningPlayerAction, Card winningPlayerCard, Card losingPlayerCard)
+    public ChoiceResult ChooseCardAttribute(IChooseAction winningPlayerAction, Card winningPlayerCard, Card losingPlayerCard)
     {
+        var result = ChoiceResult.Draw;
+        var indexChoose = winningPlayerAction.MakeChoice(winningPlayerCard);
+
+        if (winningPlayerCard.Attributes[indexChoose] > losingPlayerCard.Attributes[indexChoose])
+            result = ChoiceResult.Win;
+
+        if (winningPlayerCard.Attributes[indexChoose] < losingPlayerCard.Attributes[indexChoose])
+            result = ChoiceResult.Lose;
+
         //TO-DO
-        return Results.Win;
+        return result;
+    }
+
+    public bool AnswerQuestion(IAnswerAction answerAction, Question question)
+    {
+        var answer = answerAction.MakeAnswer(question);
+
+        return answer == question.RightChoice;
     }
 
     public bool EnableQuestion(int turnsWithSameWinner, int winningPlayerDeckCount, int losingPlayerDeckCount)
@@ -101,9 +128,17 @@ public class TurnControl : ITurnControl
     /// <summary>
     /// Vencedor recolhe a carta do adversario e quaisquer cartas 
     /// </summary>
-    public void WinnerTakesAll()
+    public void WinnerTakesAll(Deck drawCards, Card losingPlayerCard, Card winnerPlayerCard, Deck winnerPlayerDeck)
     {
-        //TO-DO take all hand cards and draw cards
+        winnerPlayerDeck.PlaceCard(winnerPlayerCard);
+        winnerPlayerDeck.PlaceCard(losingPlayerCard);
+
+        int count = drawCards.Count;
+        for (int i = 0; i < count; i++)
+        {
+            winnerPlayerDeck.PlaceCard(drawCards.TakeCard());
+        }
+
     }
 
 }
