@@ -9,7 +9,7 @@ public class TexturePostProcessor : AssetPostprocessor
         TextureImporter importer = assetImporter as TextureImporter;
         importer.textureType = TextureImporterType.Sprite;
 
-        Object asset = AssetDatabase.LoadAssetAtPath(importer.assetPath, typeof(Texture2D));
+        //Object asset = AssetDatabase.LoadAssetAtPath(importer.assetPath, typeof(Texture2D));
         //if (asset)
         //{
         //    EditorUtility.SetDirty(asset);

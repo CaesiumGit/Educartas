@@ -4,17 +4,15 @@ using System.Collections;
 public class GameControl
 {
     private int _numberOfCards;
-    private string _cardsPath;
 
     private Player _player1;
     private Player _player2;
 
     private ITurnControl _turnControl;
 
-    public GameControl(int numberOfCards, string cardsPath, ITurnControl turnControl)
+    public GameControl(int numberOfCards, ITurnControl turnControl)
     {
         _numberOfCards = numberOfCards;
-        _cardsPath = cardsPath;
         _turnControl = turnControl;
     }
 
