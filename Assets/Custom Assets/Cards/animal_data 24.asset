@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0a32e366c35dd4d87fc4f203f91885, type: 3}
+  m_Name: animal_data 24
+  m_EditorClassIdentifier: 
+  ScientificName: 'Taenia solium '
+  Name: "T\xEAnia Solit\xE1ria "
+  Size: 1000
+  Speed: .100000001
+  LitterNumber: 300000
+  LifeSpan: 25
+  TerrainSymbol: {fileID: 21300000, guid: 066295cbba6b05e4ebdf6d26effe45ef, type: 3}
+  ClassBG: {fileID: 21300000, guid: 800b0007f23498046a328783e60c3d81, type: 3}
+  AnimalImage: {fileID: 21300000, guid: ad0245e692e03e9469b03c0b5bd6767f, type: 3}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0a32e366c35dd4d87fc4f203f91885, type: 3}
+  m_Name: animal_data 5
+  m_EditorClassIdentifier: 
+  ScientificName: 'Balaenoptera musculus '
+  Name: 'Baleia Azul '
+  Size: 2700
+  Speed: 50
+  LitterNumber: 1
+  LifeSpan: 90
+  TerrainSymbol: {fileID: 21300000, guid: a4be8884ce23cb14ebf231a42a07f7cb, type: 3}
+  ClassBG: {fileID: 21300000, guid: 925150824f3ebe2458694595a5079063, type: 3}
+  AnimalImage: {fileID: 21300000, guid: c82bb9d08c67b11469d41ce16f1005a7, type: 3}
