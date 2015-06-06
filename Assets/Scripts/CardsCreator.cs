@@ -10,10 +10,16 @@ public class CardsCreator : ICardsCreator
 
         for (int i = 0; i < cards.Length; i++)
         {
+            var cardData = cardsData[i];
             var name = cardsData[i].ScientificName;
             var attributes = new float[4];
 
-            //attributes[0] = cardsData
+            attributes[0] = cardData.Size;
+            attributes[1] = cardData.Speed;
+            attributes[2] = cardData.LitterNumber;
+            attributes[3] = cardData.LifeSpan;
+
+            cards[i] = new Card(name, attributes);
         }
 
         return cards;

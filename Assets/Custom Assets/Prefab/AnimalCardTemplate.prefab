@@ -246,7 +246,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.02999997, y: 7.38000011, z: 0}
+  m_LocalPosition: {x: 1.02999997, y: 7.90999985, z: -0}
   m_LocalScale: {x: .66323328, y: .66323334, z: .66323334}
   m_Children: []
   m_Father: {fileID: 477340}
@@ -258,7 +258,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0399999991, y: -1.99000001, z: 0}
+  m_LocalPosition: {x: -.0399999991, y: -.970000029, z: -0}
   m_LocalScale: {x: .516817093, y: .516817153, z: .516817153}
   m_Children: []
   m_Father: {fileID: 477340}
@@ -364,8 +364,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122900}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.4099998, y: 1.17700005, z: 32.5699997}
+  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
+  m_LocalPosition: {x: 16.4099998, y: 1.20500004, z: 32.5699997}
   m_LocalScale: {x: .0585085042, y: .0585084893, z: .0585084893}
   m_Children:
   - {fileID: 477340}
@@ -559,9 +559,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119552}
-  m_Text: 'Animals Legausus
-
-'
+  m_Text: Animalus Legalus
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -582,9 +580,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188180}
-  m_Text: 'Animal Legal
-
-'
+  m_Text: Animal Legal
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

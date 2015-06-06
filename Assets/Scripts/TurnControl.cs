@@ -8,79 +8,33 @@ public enum ChoiceResult
     Draw
 }
 
-public class TurnControl : ITurnControl
+public class TurnControl
 {
     //Jogador que venceu o ultimo turno e tem a iniciativa no turn atual.
     private Player _winningPlayer;
     private Player _losingPlayer;
-
-    //Conta quantas turnos seguidos como o mesmo jogador vencedor.
-    private int _turnsWithSameWinner;
 
     //Deck que armazenará as cartas que ficarem reservadas devido a empate.
     private Deck _drawCards;
 
     public Player WinningPlayer { get { return _winningPlayer; } }
     public Player LosingPlayer { get { return _losingPlayer; } }
+    public Deck DrawCards { get { return _drawCards; } }
 
-    private bool _draw;
-    private IQuestionCreator _questionCreator;
-
-    public TurnControl(Player winningPlayer, Player losingPlayer, IQuestionCreator questionCreator)
+    public TurnControl(Player winningPlayer, Player losingPlayer)
     {
         _winningPlayer = winningPlayer;
         _losingPlayer = losingPlayer;
 
         _drawCards = new Deck(40);
-        _questionCreator = questionCreator;
     }
 
-    #region Interface methods
-    public void StartTurn()
-    {
-        TakeCards();
-        _draw = false;
-        if (EnableQuestion(_turnsWithSameWinner, _winningPlayer.Deck.Count, _losingPlayer.Deck.Count))
-        {
-            if (AnswerQuestion(_losingPlayer.AnswerAction, _questionCreator.CreateQuestion(_winningPlayer.HandCard)))
-            {
-                SwitchPlayers();
-            }
-        }
-    }
-
-    public void HandleTurn()
-    {
-        switch (ChooseCardAttribute(_winningPlayer.ChooseAction, _winningPlayer.HandCard, _losingPlayer.HandCard))
-        {
-            case ChoiceResult.Lose:
-                SwitchPlayers();
-                break;
-            case ChoiceResult.Win:
-                _turnsWithSameWinner++;
-                break;
-            case ChoiceResult.Draw:
-                _drawCards.PlaceCard(_winningPlayer.HandCard);
-                _drawCards.PlaceCard(_losingPlayer.HandCard);
-                _draw = true;
-                break;
-        }
-    }
-
-    public void EndTurn()
-    {
-        //Checa se houve empate
-        if (!_draw)
-            WinnerTakesAll(_drawCards, _losingPlayer.HandCard, _winningPlayer.HandCard, _winningPlayer.Deck);
-    }
-    #endregion
-
-    public void SwitchPlayers()
+    public void SwitchPlayers(out int turnsWithSameWinner)
     {
         var tmp = _winningPlayer;
         _winningPlayer = _losingPlayer;
         _losingPlayer = tmp;
-        _turnsWithSameWinner = 0;
+        turnsWithSameWinner = 0;
     }
 
     public void TakeCards()

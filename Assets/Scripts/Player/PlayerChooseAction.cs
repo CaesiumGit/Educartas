@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerChooseAction : IChooseAction
+public class PlayerChooseAction : MonoBehaviour, IChooseAction
 {
+    private int _choise;
 
     public int MakeChoice(Card card)
     {
-        throw new System.NotImplementedException();
+        return _choise;
+    }
+
+    public void SetOption(int option)
+    {
+        _choise = option;
     }
 }
