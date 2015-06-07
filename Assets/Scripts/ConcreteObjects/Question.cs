@@ -3,13 +3,13 @@ using System.Collections;
 
 public class Question
 {
-    public readonly string QuestionText;
-    public readonly string[] Choices;
+    public readonly int AttributeIndex;
+    public readonly float[] Choices;
     public readonly int RightChoice;
 
-    public Question(string questionText, string[] choices, int rightChoice)
+    public Question(int attributeIndex, float[] choices, int rightChoice)
     {
-        QuestionText = questionText;
+        AttributeIndex = attributeIndex;
         Choices = choices;
         RightChoice = rightChoice;
     }

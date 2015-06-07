@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum TurnState
 {
@@ -16,7 +17,10 @@ public enum TurnState
     Draws,
     Player1TakeDrawCards,
     Player2TakeDrawCards,
-    EndTurn
+    EndTurn,
+    ShowQuestionToComputer,
+    ComputerWrong,
+    ComputerRight
 }
 
 [Serializable]
@@ -38,6 +42,11 @@ public class GameBehavior : MonoBehaviour, ITurnState
     public DeckBehavior DrawDeck;
     public GameObject DefaultCard;
     public GameObject InfoText;
+    public GameObject QuestionPanel;
+    public GameObject ComputerQuestion;
+    public Text ComputerText;
+    public GameObject PlayerWin;
+    public GameObject ComputerWin;
 
     private GameControl _gameControl;
     private TurnState _state;
@@ -45,6 +54,7 @@ public class GameBehavior : MonoBehaviour, ITurnState
     private Job _job;
     private float _timePassed;
     private List<Transform> _drawCards;
+    private bool _endGame;
 
     #region MonoBehaviors methods
     // Use this for initialization
@@ -56,29 +66,35 @@ public class GameBehavior : MonoBehaviour, ITurnState
         _job = new Job(_gameControl.RunGame(this));
         //_job.Start();
         _drawCards = new List<Transform>();
-
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
-        //DrawDeck.AddCard(Instantiate(DefaultCard, Vector3.zero, Quaternion.identity) as GameObject);
+        StartCoroutine(waitToStart());
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_active)
-        {
-            _active = true;
-            StartCoroutine(_gameControl.RunGame(this));
-        }
-
         if (!_active)
             return;
 
         handleState();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.LoadLevel("MainMenu");
+        }
+
+        if (_endGame)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Application.LoadLevel("MainMenu");
+            }
+        }
+    }
+
+    IEnumerator waitToStart()
+    {
+        yield return new WaitForSeconds(2);
+        StartCoroutine(_gameControl.RunGame(this));
+        _active = true;
     }
 
     void LateUpdate()
@@ -131,6 +147,25 @@ public class GameBehavior : MonoBehaviour, ITurnState
             _drawCards.Add(DrawDeck.TakeCard().transform);
         }
     }
+
+    private void checkForWinners()
+    {
+        if (Player1.DeckBehavior.Count <= 0)
+        {
+            ComputerWin.SetActive(true);
+            StopAllCoroutines();
+            _endGame = true;
+        }
+
+        if (Player2.DeckBehavior.Count <= 0)
+        {
+            PlayerWin.SetActive(true);
+            StopAllCoroutines();
+            _endGame = true;
+        }
+
+    }
+
     private void handleState()
     {
         switch (_state)
@@ -201,7 +236,15 @@ public class GameBehavior : MonoBehaviour, ITurnState
                 break;
             case TurnState.EndTurn:
                 wait(1);
-                //_timePassed = 0;
+                break;
+            case TurnState.ShowQuestionToComputer:
+                wait(3);
+                break;
+            case TurnState.ComputerRight:
+                wait(3);
+                break;
+            case TurnState.ComputerWrong:
+                wait(3);
                 break;
         }
     }
@@ -231,9 +274,23 @@ public class GameBehavior : MonoBehaviour, ITurnState
                 takeDrawCards();
                 break;
             case TurnState.EndTurn:
-                //wait(1);
+                _timePassed = 0;
+                checkForWinners();
+                break;
+            case TurnState.ShowQuestion:
+                QuestionPanel.SetActive(true);
+                break;
+            case TurnState.ShowQuestionToComputer:
+                ComputerQuestion.SetActive(true);
+                ComputerText.text = "Computador está respondendo a pergunta";
                 _timePassed = 0;
                 break;
+            case TurnState.ComputerRight:
+                ComputerText.text = "Acertou!";
+                _timePassed = 0; break;
+            case TurnState.ComputerWrong:
+                ComputerText.text = "Errou!";
+                _timePassed = 0; break;
         }
     }
 
@@ -260,6 +317,15 @@ public class GameBehavior : MonoBehaviour, ITurnState
                 break;
             case TurnState.Player2Wins:
                 break;
+            case TurnState.ShowQuestion:
+                QuestionPanel.SetActive(false);
+                break;
+            case TurnState.ComputerRight:
+                ComputerQuestion.SetActive(false);
+                break;
+            case TurnState.ComputerWrong:
+                ComputerQuestion.SetActive(false);
+                break;
         }
     }
 
@@ -274,8 +340,27 @@ public class GameBehavior : MonoBehaviour, ITurnState
     {
         _gameControl = new GameControl(40);
         _gameControl.SetupPlayersDeck(new CardsCreator(), new ShuffleCards(), new CardDealer(40));
-        _gameControl.SetupPlayers(GetComponent<PlayerChooseAction>(), new PlayerAnswerAction(), GetComponent<ComputerChooseAction>(), new PlayerAnswerAction());
-        _gameControl.SetupTurnControl(new TurnControl(_gameControl.Player2, _gameControl.Player1), new QuestionCreator());
+        _gameControl.SetupPlayers(GetComponent<PlayerChooseAction>(), GetComponent<PlayerAnswerAction>(), GetComponent<ComputerChooseAction>(), new ComputerAnswerAction());
+        Player winner = null;
+        Player loser = null;
+        setStartPlayer(out winner, out loser);
+        _gameControl.SetupTurnControl(new TurnControl(winner, loser), GetComponent<QuestionCreator>());
+    }
+
+    private void setStartPlayer(out Player winnerPlayer, out Player loserPlayer)
+    {
+        int rand = UnityEngine.Random.Range(0, 2);
+        if (rand == 0)
+        {
+            winnerPlayer = _gameControl.Player1;
+            loserPlayer = _gameControl.Player2;
+        }
+        else
+        {
+            winnerPlayer = _gameControl.Player2;
+            loserPlayer = _gameControl.Player1;
+        }
+
     }
 
     private void setupPlayerObjects()

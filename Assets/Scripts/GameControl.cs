@@ -88,8 +88,41 @@ public class GameControl
             }
             yield return new WaitForEndOfFrame();
             #endregion
+            bool answer = false;
+            if (_turnControl.EnableQuestion(_turnsWithSameWinner, _turnControl.WinningPlayer.Deck.Count, _turnControl.LosingPlayer.Deck.Count))
+            {
+                var question = _questionCreator.CreateQuestion(_turnControl.WinningPlayer.HandCard);
+                if (_turnControl.WinningPlayer == _player2)
+                {
+                    state.ChangeState(TurnState.ShowQuestion);
+                    answer = _turnControl.AnswerQuestion(_turnControl.LosingPlayer.AnswerAction, question);
+                }
+                else
+                {
+                    state.ChangeState(TurnState.ShowQuestionToComputer);
+                    #region Stop
+                    while (!_nextStep)
+                    {
+                        yield return null;
+                    }
+                    yield return new WaitForEndOfFrame();
+                    #endregion
+                    answer = _turnControl.AnswerQuestion(_turnControl.LosingPlayer.AnswerAction, question);
+                    if (!answer)
+                        state.ChangeState(TurnState.ComputerWrong);
+                    else
+                        state.ChangeState(TurnState.ComputerRight);
+                }
+                #region Stop
+                while (!_nextStep)
+                {
+                    yield return null;
+                }
+                yield return new WaitForEndOfFrame();
+                #endregion
+                handleQuestion(answer);
+            }
 
-            //handleQuestion(state);
             ChoiceResult choiceResult = ChoiceResult.Draw;
             if (_turnControl.WinningPlayer == _player1)
             {
@@ -117,9 +150,6 @@ public class GameControl
             }
             state.ChangeState(TurnState.ShowCards);
             //Debug
-            Debug.Log("Player card: " + _player1.HandCard.Name);
-            Debug.Log("Computer card: " + _player2.HandCard.Name);
-            Debug.Log("Detentor do turno venceu? " + choiceResult);
             //
             #region Stop
             while (!_nextStep)
@@ -163,16 +193,11 @@ public class GameControl
         }
     }
 
-    private void handleQuestion(ITurnState state)
+    private void handleQuestion(bool rightAnswer)
     {
-        state.ChangeState(TurnState.CheckForQuestion);
-        if (_turnControl.EnableQuestion(_turnsWithSameWinner, _turnControl.WinningPlayer.Deck.Count, _turnControl.LosingPlayer.Deck.Count))
+        if (rightAnswer)
         {
-            state.ChangeState(TurnState.ShowQuestion);
-            if (_turnControl.AnswerQuestion(_turnControl.LosingPlayer.AnswerAction, _questionCreator.CreateQuestion(_turnControl.WinningPlayer.HandCard)))
-            {
-                _turnControl.SwitchPlayers(out _turnsWithSameWinner);
-            }
+            _turnControl.SwitchPlayers(out _turnsWithSameWinner);
         }
     }
 

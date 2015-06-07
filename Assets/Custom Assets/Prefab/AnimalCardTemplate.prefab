@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 167486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .670000017, y: -4.46000004, z: 0}
-  m_LocalScale: {x: .601856768, y: .601856709, z: .601856709}
+  m_LocalScale: {x: .453885555, y: .453885496, z: .453885496}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 3
@@ -246,8 +246,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.02999997, y: 7.90999985, z: -0}
-  m_LocalScale: {x: .66323328, y: .66323334, z: .66323334}
+  m_LocalPosition: {x: 1, y: 8.53709984, z: -5.42789985e-06}
+  m_LocalScale: {x: .38027519, y: .38027513, z: .38027513}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 0
@@ -258,8 +258,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.0399999991, y: -.970000029, z: -0}
-  m_LocalScale: {x: .516817093, y: .516817153, z: .516817153}
+  m_LocalPosition: {x: 0, y: -.195749998, z: -6.6775001e-06}
+  m_LocalScale: {x: .399457216, y: .399457306, z: .399457306}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 1
@@ -271,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 107374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .670000017, y: -6, z: 0}
-  m_LocalScale: {x: .601856709, y: .601856768, z: .601856768}
+  m_LocalScale: {x: .453885525, y: .453885525, z: .453885525}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 4
@@ -342,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 157698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .670000017, y: -2.80999994, z: 0}
-  m_LocalScale: {x: .601856709, y: .601856768, z: .601856768}
+  m_LocalScale: {x: .453885525, y: .453885525, z: .453885525}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 2
@@ -364,8 +364,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122900}
-  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 16.4099998, y: 1.20500004, z: 32.5699997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .0585085042, y: .0585084893, z: .0585084893}
   m_Children:
   - {fileID: 477340}
@@ -392,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 177848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .670000017, y: -7.73999977, z: 0}
-  m_LocalScale: {x: .601856649, y: .601856828, z: .601856828}
+  m_LocalScale: {x: .453885466, y: .453885585, z: .453885585}
   m_Children: []
   m_Father: {fileID: 477340}
   m_RootOrder: 5
@@ -559,14 +559,14 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119552}
-  m_Text: Animalus Legalus
+  m_Text: 'Daubentonia madagascarienses '
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 4
-  m_Alignment: 0
+  m_Anchor: 1
+  m_Alignment: 1
   m_TabSize: 2.30999994
-  m_FontSize: 15
+  m_FontSize: 30
   m_FontStyle: 2
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 3506c67f0ae45e0428d2aee308a70d28, type: 3}
@@ -585,9 +585,9 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 30
+  m_FontSize: 42
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 25c64b034f3ce8b49a80984d337904a4, type: 3}
@@ -606,9 +606,9 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 12
+  m_FontSize: 18
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 3506c67f0ae45e0428d2aee308a70d28, type: 3}
@@ -627,9 +627,9 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 12
+  m_FontSize: 18
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 3506c67f0ae45e0428d2aee308a70d28, type: 3}
@@ -648,9 +648,9 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 12
+  m_FontSize: 18
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 3506c67f0ae45e0428d2aee308a70d28, type: 3}
@@ -669,9 +669,9 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 12
+  m_FontSize: 18
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 3506c67f0ae45e0428d2aee308a70d28, type: 3}

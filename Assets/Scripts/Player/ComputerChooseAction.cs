@@ -18,7 +18,7 @@ public class ComputerChooseAction : MonoBehaviour, IChooseAction
                 attribute = "Velocidade";
                 break;
             case 2:
-                attribute = "Número de filhotes";
+                attribute = "Ninhada";
                 break;
             case 3:
                 attribute = "Tempo de vida";
