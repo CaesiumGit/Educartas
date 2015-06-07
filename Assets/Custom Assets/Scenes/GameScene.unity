@@ -693,7 +693,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
   m_AnchoredPosition: {x: -202, y: -25.5699997}
-  m_SizeDelta: {x: 238.099976, y: 102.699997}
+  m_SizeDelta: {x: 258.200012, y: 102.699997}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &463999427
 MonoBehaviour:
@@ -915,8 +915,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -5.67999268, y: -.430007935}
-  m_SizeDelta: {x: 204.259995, y: 78.9000015}
+  m_AnchoredPosition: {x: -1.10000002, y: -.430007935}
+  m_SizeDelta: {x: 252.100006, y: 78.9000015}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &558601444
 MonoBehaviour:
@@ -943,7 +943,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Computador escolheu tamanho
+  m_Text: Computador escolheu tempo de vida
 --- !u!222 &558601445
 CanvasRenderer:
   m_ObjectHideFlags: 0

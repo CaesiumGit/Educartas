@@ -95,6 +95,13 @@ public class GameControl
                 if (_turnControl.WinningPlayer == _player2)
                 {
                     state.ChangeState(TurnState.ShowQuestion);
+                    #region Stop
+                    while (!_nextStep)
+                    {
+                        yield return null;
+                    }
+                    yield return new WaitForEndOfFrame();
+                    #endregion
                     answer = _turnControl.AnswerQuestion(_turnControl.LosingPlayer.AnswerAction, question);
                 }
                 else
@@ -112,14 +119,14 @@ public class GameControl
                         state.ChangeState(TurnState.ComputerWrong);
                     else
                         state.ChangeState(TurnState.ComputerRight);
+                    #region Stop
+                    while (!_nextStep)
+                    {
+                        yield return null;
+                    }
+                    yield return new WaitForEndOfFrame();
+                    #endregion
                 }
-                #region Stop
-                while (!_nextStep)
-                {
-                    yield return null;
-                }
-                yield return new WaitForEndOfFrame();
-                #endregion
                 handleQuestion(answer);
             }
 
@@ -167,14 +174,6 @@ public class GameControl
             }
             yield return new WaitForEndOfFrame();
             #endregion
-            state.ChangeState(TurnState.EndTurn);
-            #region Stop
-            while (!_nextStep)
-            {
-                yield return null;
-            }
-            yield return new WaitForEndOfFrame();
-            #endregion
             if (!_draw)
             {
                 if (_turnControl.DrawCards.Count > 0)
@@ -190,6 +189,14 @@ public class GameControl
                 }
                 _turnControl.WinnerTakesAll(_turnControl.DrawCards, _turnControl.LosingPlayer.HandCard, _turnControl.WinningPlayer.HandCard, _turnControl.WinningPlayer.Deck);
             }
+            state.ChangeState(TurnState.EndTurn);
+            #region Stop
+            while (!_nextStep)
+            {
+                yield return null;
+            }
+            yield return new WaitForEndOfFrame();
+            #endregion
         }
     }
 

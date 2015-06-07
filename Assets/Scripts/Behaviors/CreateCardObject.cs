@@ -77,7 +77,7 @@ public class CreateCardObject : MonoBehaviour
             string nextWord = words[i] + " ";
             textObject.text += nextWord;
             var textSize = textRenderer.bounds.size.x;
-            if (textSize > maxWidth)
+            if (textSize > maxWidth && i != 0)
             {
                 textObject.text = lastString + "\n" + nextWord;
             }

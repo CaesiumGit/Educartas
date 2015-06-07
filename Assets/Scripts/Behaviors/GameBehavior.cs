@@ -213,26 +213,23 @@ public class GameBehavior : MonoBehaviour, ITurnState
                 {
                     DrawDeck.AddCard(Player2.HandCard);
                     DrawDeck.AddCard(Player1.HandCard);
+                    _gameControl.NextStep();
                 }
                 break;
 
             case TurnState.Player1TakeDrawCards:
-                if (!moveDrawCards(Player1.DeckBehavior.transform))
+                foreach(GameObject card in DrawDeck.Cards)
                 {
-                    foreach (Transform card in _drawCards)
-                    {
-                        Player1.DeckBehavior.AddCard(card.gameObject);
-                    }
+                    Player1.DeckBehavior.AddCard(DrawDeck.TakeCard());
                 }
+                _gameControl.NextStep();
                 break;
             case TurnState.Player2TakeDrawCards:
-                if (!moveDrawCards(Player2.DeckBehavior.transform))
+                 foreach(GameObject card in DrawDeck.Cards)
                 {
-                    foreach (Transform card in _drawCards)
-                    {
-                        Player2.DeckBehavior.AddCard(card.gameObject);
-                    }
+                    Player1.DeckBehavior.AddCard(DrawDeck.TakeCard());
                 }
+                _gameControl.NextStep();
                 break;
             case TurnState.EndTurn:
                 wait(1);
